@@ -87,25 +87,33 @@ void displayRecordsInHash(struct HashType *pHashArray, int hashSz)
 
 	for (i=0; i<hashSz; ++i)
 	{
-		if(pHashArray[i].recordArray == NULL)
-			continue;
-
+		int flag = 0;
 		// if index is occupied with any records, print all
-		else if (pHashArray[i].recordArray != NULL) {
+		if (pHashArray->recordArray != NULL) {
 
 			struct node *walker = pHashArray->recordArray[i];
-			printf("index %d -> ", i);
+			
 
 			while(walker != NULL) {
+				printf("index %d -> ", i);
 				printf("%d, %c, %d", walker->nodeRecord->id, walker->nodeRecord->name, walker->nodeRecord->order);
+				
 
 				if(walker->nextNode != NULL) {
 					printf(" -> ");
 				}
 
 				walker = walker->nextNode;
+				flag = 1;
+				
 			}
 		}
+
+		else {
+			continue;
+		}
+
+		if(flag == 1) //To avoid printing empty indexes.
 		printf("\n");
 	}
 }
